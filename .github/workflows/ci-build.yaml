@@ -1,0 +1,26 @@
+# name: CI Build
+# on:
+#   push:
+#     branches:
+#       - main
+#       - master
+#   pull_request:
+#     branches:
+#       - main
+#       - master
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
+      
+#       - name: Set Up Node.jobs
+#         uses: actions/setup-node@v3
+#         with:
+#           node-version: 'lts/*'
+      
+#       - name: Install dependencies
+#         run: npm install

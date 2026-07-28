@@ -1,0 +1,10 @@
+# Dependencies
+node_modules/
+
+# Secrets
+.env
+.env.*
+
+# Misc
+.DS_Store
+.vscode/
