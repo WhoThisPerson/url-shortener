@@ -1,3 +1,6 @@
+/**
+ * Mappings between HTTP status codes and their meanings
+ */
 export const HTTP_STATUS = {
     OK: 200,
     CREATED: 201,
