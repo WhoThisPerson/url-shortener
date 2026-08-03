@@ -21,7 +21,7 @@ const urls: ShortenedURL[] = []
  * a base62 encoding of the URL
  * @param id - id of the original URL
  */
-function encodeBase62(id: number): string {
+export function encodeBase62(id: number): string {
 
     let short = "";
 
@@ -37,11 +37,11 @@ function encodeBase62(id: number): string {
  * @param originalUrl - the original URL meant to be shortened
  * @returns the ShortenedURL's information
  */
-function createUrl(originalUrl: string): ShortenedURL {
+export function createUrl(originalUrl: string): ShortenedURL {
     
     const id = nextId++;
 
-    const new_shortenedURL = {
+    const newShortenedURL = {
         id: id,
         originalUrl: originalUrl,
         shortUrl: encodeBase62(id),
@@ -49,33 +49,42 @@ function createUrl(originalUrl: string): ShortenedURL {
         createdAt: new Date()
     }
 
-    urls.push(new_shortenedURL);
+    urls.push(newShortenedURL);
 
-    return new_shortenedURL;
+    return newShortenedURL;
 }
 
 /**
  * Will return all listed URLs stored
  */
-function getAllUrls() {
-
+export function getAllUrls(): ShortenedURL[] {
+    return urls;
 }
 
-/**
- * Will find a URL
- * @param id - id of the URL to look for
- * @returns the 
- */
-function getById(id: number): string {
-    return ""
-}
+// /**
+//  * Will find a URL
+//  * @param id - id of the URL to look for
+//  * @returns the 
+//  */
+// function getById(id: number): string {
+    
+// }
 
 /**
  * Will find a URL and increment the click counted
  * @param shortUrl - the short URL to be searched
+ * @returns the shortened URL's details
  */
-function resolveShortURL(shortUrl: string) {
+export function resolveShortURL(shortUrl: string): ShortenedURL | undefined {
 
+    const url = urls.find(url => url.shortUrl === shortUrl);
+
+    if (!url) return;
+    
+
+    url.clickCount++;
+
+    return url;
 }
 
 /**
@@ -83,6 +92,12 @@ function resolveShortURL(shortUrl: string) {
  * @param id - id of the URL to be deleted
  * @returns true if deleted, false otherwise
  */
-function deleteURL(id: number): boolean {
-    return false;
+export function deleteURL(id: number): boolean {
+
+    const index = urls.findIndex(url => url.id === id);
+
+    if (index === -1) return false;
+
+    urls.splice(index, 1);
+    return true;
 }
