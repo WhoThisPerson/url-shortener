@@ -1,32 +1,18 @@
 import { Router } from "express";
-import { HTTP_STATUS } from "../constants/http-status.js";
+import { createUrl, getAllUrls, resolveShortUrl, deleteUrl } from "../controllers/url.controllers.js";
 
 const router = Router();
 
 // Create a shortened URL
-router.post("/", (req, res) => {
-    res.status(HTTP_STATUS.CREATED).json({
-        message: "Created URL endpoint"
-    });
-});
+router.post("/", createUrl);
 
 // Get all URLS
-router.get("/", (req, res) => {
-    res.status(HTTP_STATUS.OK).json({
-        message: "All available URLs"
-    })
-});
+router.get("/", getAllUrls);
 
 // Get specific URL details
-router.get("/:id", (req, res) => {
-    res.status(HTTP_STATUS.OK).json({
-        message: `Get URL ${req.params.id}`
-    });
-});
+router.get("/:shortUrl", resolveShortUrl);
 
 // Delete a specific URL
-router.delete("/:id", (req, res) => {
-    res.status(HTTP_STATUS.NO_CONTENT).send();
-})
+router.delete("/:id", deleteUrl);
 
 export default router;
