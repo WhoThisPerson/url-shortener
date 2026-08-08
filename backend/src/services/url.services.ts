@@ -5,7 +5,7 @@ import { BASE62_CHARACTERS } from "../constants/base62.js";
 interface ShortenedUrl {
     id: number;
     originalUrl: string;
-    shortUrl: string;
+    shortCode: string;
     clickCount: number;
     createdAt: Date;
 }
@@ -44,7 +44,7 @@ export function createUrl(originalUrl: string): ShortenedUrl {
     const newShortenedURL = {
         id: id,
         originalUrl: originalUrl,
-        shortUrl: encodeBase62(id),
+        shortCode: encodeBase62(id),
         clickCount: 0,
         createdAt: new Date()
     }
@@ -58,29 +58,19 @@ export function createUrl(originalUrl: string): ShortenedUrl {
  * Will return all listed URLs stored
  */
 export function getAllUrls(): ShortenedUrl[] {
-    return urls;
+    return [...urls];
 }
-
-// /**
-//  * Will find a URL
-//  * @param id - id of the URL to look for
-//  * @returns the 
-//  */
-// function getById(id: number): string {
-    
-// }
 
 /**
  * Will find a URL and increment the click counted
- * @param shortUrl - the short URL to be searched
+ * @param shortCode - the short code to be searched
  * @returns the shortened URL's details
  */
-export function resolveShortUrl(shortUrl: string): ShortenedUrl | undefined {
+export function resolveShortCode(shortCode: string): ShortenedUrl | undefined {
 
-    const url = urls.find(url => url.shortUrl === shortUrl);
+    const url = urls.find(url => url.shortCode === shortCode);
 
     if (!url) return;
-    
 
     url.clickCount++;
 
