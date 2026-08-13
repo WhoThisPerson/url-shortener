@@ -1,14 +1,5 @@
 import { BASE62_CHARACTERS } from "../constants/base62.js";
-/**
- * Represents the intended structure of how URL infor will be stored
- */
-interface ShortenedUrl {
-    id: number;
-    originalUrl: string;
-    shortCode: string;
-    clickCount: number;
-    createdAt: Date;
-}
+import type { ShortenedUrl } from "../types/shortened-url.js";
 
 // Temporarily acts as id to mimick AUTO-INCREMENT
 let nextId = 1
