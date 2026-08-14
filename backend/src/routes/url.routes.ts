@@ -1,18 +1,18 @@
 import { Router } from "express";
-import { createUrl, getAllUrls, resolveShortCode, deleteUrl } from "../controllers/url.controllers.js";
+import * as urlController from "../controllers/url.controllers.js";
 
 const router = Router();
 
 // Create a shortened URL
-router.post("/", createUrl);
+router.post("/", urlController.createUrl);
 
 // Get all URLS
-router.get("/", getAllUrls);
+router.get("/", urlController.getAllUrls);
 
 // Get specific URL details
-router.get("/:shortCode", resolveShortCode);
+router.get("/:shortCode", urlController.resolveShortCode);
 
 // Delete a specific URL
-router.delete("/:id", deleteUrl);
+router.delete("/:id", urlController.deleteUrl);
 
 export default router;
