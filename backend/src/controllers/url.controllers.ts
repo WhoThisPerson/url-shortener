@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
 import { HTTP_STATUS } from "../constants/http-status.js";
-import { createUrl as createUrlService, getAllUrls as getAllUrlsService, resolveShortCode as resolveShortCodeService, deleteUrl as deleteUrlService } from "../services/url.services.js";
+import * as urlService from "../services/url.services.js";
 
 /**
  * Will call the createUrl function from the Service repository
@@ -12,7 +12,7 @@ import { createUrl as createUrlService, getAllUrls as getAllUrlsService, resolve
  * @param req - request body
  * @param res - response body
  */
-export function createUrl(req: Request, res: Response) {
+export async function createUrl(req: Request, res: Response) {
 
     const { originalUrl } = req.body;
 
@@ -23,7 +23,7 @@ export function createUrl(req: Request, res: Response) {
         return;
 }
 
-    const shortenedUrl = createUrlService(originalUrl);
+    const shortenedUrl = await urlService.createUrl(originalUrl);
 
     res.status(HTTP_STATUS.CREATED).json(shortenedUrl);
 }
@@ -34,9 +34,9 @@ export function createUrl(req: Request, res: Response) {
  * @param req - request body
  * @param res - response body
  */
-export function getAllUrls(req: Request, res: Response) {
+export async function getAllUrls(req: Request, res: Response) {
 
-    const urls = getAllUrlsService();
+    const urls = await urlService.getAllUrls();
 
     res.status(HTTP_STATUS.OK).json(urls);
 }
@@ -47,7 +47,7 @@ export function getAllUrls(req: Request, res: Response) {
  * @param req - request body
  * @param res - response body
  */
-export function resolveShortCode(req: Request, res: Response) {
+export async function resolveShortCode(req: Request, res: Response) {
     const { shortCode } = req.params;
 
     if (typeof shortCode !== "string") {
@@ -57,7 +57,7 @@ export function resolveShortCode(req: Request, res: Response) {
         return;
     }
 
-    const url = resolveShortCodeService(shortCode);
+    const url = await urlService.resolveShortCode(shortCode);
 
     if (!url) {
         res.status(HTTP_STATUS.NOT_FOUND).json({
@@ -75,7 +75,7 @@ export function resolveShortCode(req: Request, res: Response) {
  * @param req - request body
  * @param res - response body
  */
-export function deleteUrl(req: Request, res: Response) {
+export async function deleteUrl(req: Request, res: Response) {
 
     const id = Number(req.params.id);
 
@@ -86,7 +86,7 @@ export function deleteUrl(req: Request, res: Response) {
         return;
     }
 
-    const found = deleteUrlService(id);
+    const found = await urlService.deleteUrl(id);
 
     if (!found) {
         res.status(HTTP_STATUS.NOT_FOUND).json({
@@ -95,6 +95,6 @@ export function deleteUrl(req: Request, res: Response) {
         return;
     }
 
-    res.status(HTTP_STATUS.NOT_FOUND).send();
+    res.status(HTTP_STATUS.NO_CONTENT).send();
 
 }
