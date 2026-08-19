@@ -1,6 +1,7 @@
 import { BASE62_CHARACTERS } from "../constants/base62.js";
 import type { ShortenedUrl } from "../types/shortened-url.js";
 import * as urlRepository from "../repositories/url.repositories.js";
+import { isValidUrl } from "../utils/url.utils.js";
 
 
 const CODE_LENGTH = 6;
@@ -9,7 +10,7 @@ const BASE62_CHARACTERS_LENGTH = BASE62_CHARACTERS.length;
 /**
  * Will generate a random Base62 short code
  */
-export function encodeBase62(): string {
+function encodeBase62(): string {
 
     let short = "";
 
@@ -27,6 +28,10 @@ export function encodeBase62(): string {
  * @returns the ShortenedURL's information
  */
 export async function createUrl(originalUrl: string): Promise<ShortenedUrl> {
+
+    if (!isValidUrl(originalUrl)) {
+        throw new Error("Invalid URL format");
+    }
     
     const shortCode = encodeBase62();
 

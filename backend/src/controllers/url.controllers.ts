@@ -23,9 +23,25 @@ export async function createUrl(req: Request, res: Response) {
         return;
 }
 
-    const shortenedUrl = await urlService.createUrl(originalUrl);
+    try {
+        const shortenedUrl = await urlService.createUrl(originalUrl);
 
-    res.status(HTTP_STATUS.CREATED).json(shortenedUrl);
+        res.status(HTTP_STATUS.CREATED).json(shortenedUrl);
+
+    } catch (error) {
+        if (error instanceof Error && error.message === "Invalid URL format") {
+            res.status(HTTP_STATUS.BAD_REQUEST).json({
+                message: error.message
+            });
+            return;
+        }
+    }
+    
+    // Catch any unexpected errors
+    res.status(HTTP_STATUS.INTERNAL_SERVER_ERROR).json({
+        message: "An unexpected error occurred"
+    });
+
 }
 
 /**
