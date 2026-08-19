@@ -42,6 +42,13 @@ describe("URL Routes", () => {
             expect(response.headers.location).toBe("https://www.google.com");
         })
 
+        it("returns HTTP 404 NOT_FOUND when an invalid short code is provided", async () => {
+            const response = await request(app).get("/api/urls/lakmsdlkasdkm");
+
+            expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
+            expect(response.body.message).toBe("Short code not found");
+        })
+
     })
     
     describe("POST category", async () => {
