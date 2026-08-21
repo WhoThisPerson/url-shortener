@@ -1,26 +1,73 @@
-# name: CI Build
-# on:
-#   push:
-#     branches:
-#       - main
-#       - master
-#   pull_request:
-#     branches:
-#       - main
-#       - master
+name: CI Build
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
 
-# jobs:
-#   build:
-#     runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-#     steps:
-#       - name: Checkout Repository
-#         uses: actions/checkout@v3
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: url_shortener_ci
+
+      DATABASE_HOST: localhost
+      DATABASE_PORT: 5432
+      DATABASE_NAME: url_shortener_ci
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: postgres
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
       
-#       - name: Set Up Node.jobs
-#         uses: actions/setup-node@v3
-#         with:
-#           node-version: 'lts/*'
+      - name: Set Up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
       
-#       - name: Install dependencies
-#         run: npm install
+      # # -------------------------------------------------------------
+      # # Install dependencies and run tests for the frontend
+      # # -------------------------------------------------------------
+      # TBA
+      
+      # -------------------------------------------------------------
+      # Install dependencies and run tests for the backend
+      # -------------------------------------------------------------
+      - name: Install Backend dependencies
+        working-directory: ./backend
+        run: npm ci
+
+      - name: Start PostgreSQL
+        run: docker compose up -d
+
+      - name: Check PostgreSQL container
+        run: |
+          docker ps -a
+          docker logs url-shortener-db
+      
+      - name: Wait for PostgreSQL to be ready
+        run: |
+          until docker exec url-shortener-db pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"; do
+            echo "waiting for PostgreSQL to be ready..."
+            sleep 2
+          done
+
+      - name: Run database migrations
+        working-directory: ./backend
+        run: |
+          docker exec -i url-shortener-db psql \
+            -U "$POSTGRES_USER" \
+            -d "$POSTGRES_DB" \
+            < migrations/001_create_urls_table.sql
+
+      - name: Run Backend Tests
+        working-directory: ./backend
+        run: npm test

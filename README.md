@@ -2,7 +2,7 @@
 This project implements a URL shortener — a popular system design interview question.
 
 ## Current Build Status:
-<!-- ![Build Status](https://github.com/WhoThisPerson/url-shortener/actions/workflows/ci-build.yaml/badge.svg) -->
+![Build Status](https://github.com/WhoThisPerson/url-shortener/actions/workflows/ci-build.yaml/badge.svg)
 
 
 ## Features
