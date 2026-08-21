@@ -41,6 +41,11 @@ jobs:
 
       - name: Start PostgreSQL
         run: docker compose up -d
+
+      - name: Check PostgreSQL container
+        run: |
+          docker ps -a
+          docker logs url-shortener-db
       
       - name: Wait for PostgreSQL to be ready
         run: |
