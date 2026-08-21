@@ -60,7 +60,7 @@ jobs:
           docker exec -i url-shortener-db psql \
             -U "$POSTGRES_USER" \
             -d "$POSTGRES_DB" \
-            < migrations/001_create_urls_tables.sql
+            < migrations/001_create_urls_table.sql
 
       - name: Run Backend Tests
         working-directory: ./backend
