@@ -53,7 +53,7 @@ jobs:
             -p 5432 \
             -U postgres \
             -d url_shortener_test \
-            < migrations/001_create_tables.sql
+            < migrations/001_create_urls_table.sql
 
       - name: Run Backend Tests
         working-directory: ./backend
