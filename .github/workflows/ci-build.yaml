@@ -1,4 +1,5 @@
 name: CI Build
+
 on:
   push:
     branches:
@@ -13,53 +14,45 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+    services:
+      postgres:
+        image: postgres:18
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: url_shortener_test
+        options: >-
+          --health-cmd "pg_isready -U postgres -d url_shortener_test"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      
+
       - name: Set Up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
-      
-      # # -------------------------------------------------------------
-      # # Install dependencies and run tests for the frontend
-      # # -------------------------------------------------------------
-      # TBA
-      
+
       # -------------------------------------------------------------
-      # Install dependencies and run tests for the backend
+      # Backend
       # -------------------------------------------------------------
       - name: Install Backend dependencies
         working-directory: ./backend
         run: npm ci
 
-      - name: Start PostgreSQL
-        run: docker compose up -d
-
-      - name: Check PostgreSQL container
-        run: |
-          docker ps -a
-          docker logs url-shortener-db
-      
-      - name: Wait for PostgreSQL to be ready
-        run: |
-          until docker exec url-shortener-db pg_isready -U "$POSTGRES_USER" -d "$POSTGRES_DB"; do
-            echo "waiting for PostgreSQL to be ready..."
-            sleep 2
-          done
-
       - name: Run database migrations
         working-directory: ./backend
         run: |
-          docker exec -i url-shortener-db psql \
-            -U "$POSTGRES_USER" \
-            -d "$POSTGRES_DB" \
+          PGPASSWORD=postgres psql \
+            -h localhost \
+            -p 5432 \
+            -U postgres \
+            -d url_shortener_test \
             < migrations/001_create_tables.sql
 
       - name: Run Backend Tests
