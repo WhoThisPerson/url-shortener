@@ -2,7 +2,13 @@
 function Pagination() {
     return (
         <div>
-            Pagination
+            <button>Previous</button>
+
+            <span>
+                1 / 1
+            </span>
+
+            <button>Next</button>
         </div>
     )
 }

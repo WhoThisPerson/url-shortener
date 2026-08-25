@@ -2,7 +2,7 @@
 function Header() {
     return (
         <div>
-            Header Content
+            URL Shortener
         </div>
     )
 }
