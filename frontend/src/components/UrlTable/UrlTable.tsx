@@ -1,5 +1,11 @@
 import UrlTableRow from '../UrlTableRow/UrlTableRow';
 
+import type { ShortenedUrl } from '../../../../common/types/shortened-url';
+
+type UrlTableProps = {
+    urls: ShortenedUrl[];
+}
+
 function UrlTable() {
 
     const urls = [
@@ -19,6 +25,27 @@ function UrlTable() {
         },
         {
             id: 3,
+            shortCode: "qwe456",
+            originalUrl: "https://example.com",
+            clickCount: 2,
+            createdAt: new Date()
+        },
+        {
+            id: 4,
+            shortCode: "qwe456",
+            originalUrl: "https://example.com",
+            clickCount: 2,
+            createdAt: new Date()
+        },
+        {
+            id: 5,
+            shortCode: "qwe456",
+            originalUrl: "https://example.com",
+            clickCount: 2,
+            createdAt: new Date()
+        },
+        {
+            id: 6,
             shortCode: "qwe456",
             originalUrl: "https://example.com",
             clickCount: 2,

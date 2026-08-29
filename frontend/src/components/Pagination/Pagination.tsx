@@ -1,14 +1,26 @@
+type PaginationProps = {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+};
 
-function Pagination() {
+function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
     return (
         <div>
-            <button>Previous</button>
+            <button
+                onClick={() => onPageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+            >Previous</button>
 
             <span>
-                1 / 1
+                {currentPage} / {totalPages}
             </span>
 
-            <button>Next</button>
+            <button
+                onClick={() => onPageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+            >Next</button>
+
         </div>
     )
 }
