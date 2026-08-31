@@ -2,56 +2,9 @@ import UrlTableRow from '../UrlTableRow/UrlTableRow';
 
 import type { ShortenedUrl } from '../../../../common/types/shortened-url';
 
-type UrlTableProps = {
-    urls: ShortenedUrl[];
-}
+function UrlTable({ urls }: {urls: ShortenedUrl[]}) {
 
-function UrlTable() {
 
-    const urls = [
-        {
-            id: 1,
-            shortCode: "abc123",
-            originalUrl: "https://google.com",
-            clickCount: 12,
-            createdAt: new Date()
-        },
-        {
-            id: 2,
-            shortCode: "xyz789",
-            originalUrl: "https://github.com",
-            clickCount: 5,
-            createdAt: new Date()
-        },
-        {
-            id: 3,
-            shortCode: "qwe456",
-            originalUrl: "https://example.com",
-            clickCount: 2,
-            createdAt: new Date()
-        },
-        {
-            id: 4,
-            shortCode: "qwe456",
-            originalUrl: "https://example.com",
-            clickCount: 2,
-            createdAt: new Date()
-        },
-        {
-            id: 5,
-            shortCode: "qwe456",
-            originalUrl: "https://example.com",
-            clickCount: 2,
-            createdAt: new Date()
-        },
-        {
-            id: 6,
-            shortCode: "qwe456",
-            originalUrl: "https://example.com",
-            clickCount: 2,
-            createdAt: new Date()
-        }
-    ];
     return (
         <section>
             <h2>All URLs</h2>
@@ -73,8 +26,8 @@ function UrlTable() {
                     {urls.map((url, index) => (
                         <UrlTableRow 
                             key={url.id}
-                            rowNumber={index + 1}
                             url={url}
+                            rowNumber={index + 1}
                         />
                     ))}
                 </tbody>
