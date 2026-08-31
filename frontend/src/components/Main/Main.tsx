@@ -16,7 +16,7 @@ function Main() {
     const totalPages = Math.ceil(urls.length / urlsPerPage);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/")
+        axios.get("http://localhost:3000/api/urls")
         .then((response) => {
             setUrls(response.data);
         })
@@ -25,10 +25,21 @@ function Main() {
         })
     }, []);
 
+    async function handleCreateUrl(url: string) {
+        try {
+            const response = await axios.post("http://localhost:3000/api/urls", {
+                originalUrl: url
+            });
+            setUrls((currentUrls) => [...currentUrls, response.data]);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     return (
         <main>
-            <UrlForm />
-            <UrlTable/>
+            <UrlForm onSubmit={handleCreateUrl}/>
+            <UrlTable urls={urls}/>
             {totalPages > 1 && (
                 <Pagination 
                     currentPage={currentPage}

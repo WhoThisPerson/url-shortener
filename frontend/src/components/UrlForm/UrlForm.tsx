@@ -1,7 +1,6 @@
 import { useState } from "react";
 
-
-function UrlForm() {
+function UrlForm({ onSubmit }: { onSubmit: (url: string) => void}) {
 
     const [url, setUrl] = useState("");
 
@@ -9,7 +8,13 @@ function UrlForm() {
         <section>
             <h2>Enter a URL to shorten</h2>
 
-            <form>
+            <form
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    onSubmit(url);
+                    setUrl("");
+                }}
+            >
                 <input 
                     type="url" 
                     placeholder="Paste here..." 
