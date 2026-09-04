@@ -1,8 +1,12 @@
 import pg from "pg";
 import dotenv from "dotenv";
 
-// Load environment variables from .env file
-dotenv.config();
+// Load the appropriate environment variables
+const envFile = process.env.NODE_ENV === "test"
+    ? ".env.test"
+    : ".env";
+
+dotenv.config({ path: envFile });
 
 const { Pool } = pg;
 
