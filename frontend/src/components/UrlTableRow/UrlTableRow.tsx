@@ -1,6 +1,12 @@
 import type {ShortenedUrl} from "../../../../common/types/shortened-url";
 
-function UrlTableRow({url, rowNumber}: {url: ShortenedUrl, rowNumber: number}) {
+type UrlTableRowProps = {
+    url: ShortenedUrl;
+    rowNumber: number;
+    onDelete: (id: number) => void;
+};
+
+function UrlTableRow({ url, rowNumber, onDelete }: UrlTableRowProps) {
     return (
         <tr>
             <td>{rowNumber}</td>
@@ -8,8 +14,12 @@ function UrlTableRow({url, rowNumber}: {url: ShortenedUrl, rowNumber: number}) {
             <td>{url.shortCode}</td>
             <td>{url.clickCount}</td>
             <td><button>Copy</button></td>
-            <td><button>Delete</button></td>
-            <td>{url.createdAt.toLocaleString()}</td>
+            <td>
+                <button onClick={() => onDelete(url.id)}>
+                    Delete
+                </button>
+            </td>
+            <td>{new Date(url.createdAt).toLocaleString()}</td>
         </tr>
     )
 }

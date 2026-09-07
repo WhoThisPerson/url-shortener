@@ -1,6 +1,10 @@
 import { useState } from "react";
 
-function UrlForm({ onSubmit }: { onSubmit: (url: string) => void}) {
+type UrlFormProps = {
+    onSubmit: (url: string) => void;
+};
+
+function UrlForm({ onSubmit }: UrlFormProps) {
 
     const [url, setUrl] = useState("");
 

@@ -2,8 +2,13 @@ import UrlTableRow from '../UrlTableRow/UrlTableRow';
 
 import type { ShortenedUrl } from '../../../../common/types/shortened-url';
 
-function UrlTable({ urls }: {urls: ShortenedUrl[]}) {
+type UrlTableProps = {
+    urls: ShortenedUrl[];
+    startIndex: number;
+    onDelete: (id: number) => void;
+};
 
+function UrlTable({ urls, startIndex, onDelete }: UrlTableProps) {
 
     return (
         <section>
@@ -27,7 +32,8 @@ function UrlTable({ urls }: {urls: ShortenedUrl[]}) {
                         <UrlTableRow 
                             key={url.id}
                             url={url}
-                            rowNumber={index + 1}
+                            rowNumber={startIndex + index + 1}
+                            onDelete={onDelete}
                         />
                     ))}
                 </tbody>

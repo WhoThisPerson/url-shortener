@@ -4,6 +4,7 @@ import axios from "axios";
 import UrlForm from "../UrlForm/UrlForm";
 import UrlTable from "../UrlTable/UrlTable";
 import Pagination from "../Pagination/Pagination";
+import { HTTP_STATUS } from "../../../../common/constants/http-status.js";
 
 import type { ShortenedUrl } from "../../../../common/types/shortened-url";
 
@@ -14,6 +15,10 @@ function Main() {
 
     const urlsPerPage = 10
     const totalPages = Math.ceil(urls.length / urlsPerPage);
+
+    const indexOfLastUrl = currentPage * urlsPerPage;
+    const indexOfFirstUrl = indexOfLastUrl - urlsPerPage;
+    const currentUrls = urls.slice(indexOfFirstUrl, indexOfLastUrl);
 
     useEffect(() => {
         axios.get("http://localhost:3000/api/urls")
@@ -30,7 +35,25 @@ function Main() {
             const response = await axios.post("http://localhost:3000/api/urls", {
                 originalUrl: url
             });
-            setUrls((currentUrls) => [...currentUrls, response.data]);
+
+            // Proper response status of 201
+            if (response.status === HTTP_STATUS.CREATED) {
+                setUrls((currentUrls) => [...currentUrls, response.data]);
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    async function handleDeleteUrl(id: number) {
+
+        try {
+            const response = await axios.delete(`http://localhost:3000/api/urls/${id}`);
+            
+            //Proper response status of 204
+            if (response.status === HTTP_STATUS.NO_CONTENT) {
+                setUrls((currentUrls) => currentUrls.filter((url) => url.id !== id));
+            }
         } catch (error) {
             console.error(error);
         }
@@ -39,7 +62,7 @@ function Main() {
     return (
         <main>
             <UrlForm onSubmit={handleCreateUrl}/>
-            <UrlTable urls={urls}/>
+            <UrlTable urls={currentUrls} startIndex={indexOfFirstUrl} onDelete={handleDeleteUrl} />
             {totalPages > 1 && (
                 <Pagination 
                     currentPage={currentPage}
