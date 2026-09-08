@@ -9,9 +9,6 @@ router.post("/", urlController.createUrl);
 // Get all URLS
 router.get("/", urlController.getAllUrls);
 
-// Get specific URL details
-router.get("/:shortCode", urlController.resolveShortCode);
-
 // Delete a specific URL
 router.delete("/:id", urlController.deleteUrl);
 

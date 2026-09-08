@@ -36,14 +36,14 @@ describe("URL Routes", () => {
 
             const shortCode = createResponse.body.shortCode;
 
-            const response = await request(app).get(`/api/urls/${shortCode}`);
+            const response = await request(app).get(`/${shortCode}`);
 
             expect(response.status).toBe(HTTP_STATUS.FOUND);
             expect(response.headers.location).toBe("https://www.google.com");
         })
 
         it("returns HTTP 404 NOT_FOUND when an invalid short code is provided", async () => {
-            const response = await request(app).get("/api/urls/lakmsdlkasdkm");
+            const response = await request(app).get("/lakmsdlkasdkm");
 
             expect(response.status).toBe(HTTP_STATUS.NOT_FOUND);
             expect(response.body.message).toBe("Short code not found");
