@@ -8,6 +8,9 @@ import { HTTP_STATUS } from "../../../../common/constants/http-status.js";
 
 import type { ShortenedUrl } from "../../../../common/types/shortened-url";
 
+// Global API URL from Vite environment variables
+const API_URL = import.meta.env.VITE_API_URL;
+
 function Main() {
 
     const [urls, setUrls] = useState<ShortenedUrl[]>([]);
@@ -21,7 +24,7 @@ function Main() {
     const currentUrls = urls.slice(indexOfFirstUrl, indexOfLastUrl);
 
     useEffect(() => {
-        axios.get("http://localhost:3000/api/urls")
+        axios.get(`${API_URL}/api/urls`)
         .then((response) => {
             setUrls(response.data);
         })
@@ -32,7 +35,7 @@ function Main() {
 
     async function handleCreateUrl(url: string) {
         try {
-            const response = await axios.post("http://localhost:3000/api/urls", {
+            const response = await axios.post(`${API_URL}/api/urls`, {
                 originalUrl: url
             });
 
@@ -48,7 +51,7 @@ function Main() {
     async function handleDeleteUrl(id: number) {
 
         try {
-            const response = await axios.delete(`http://localhost:3000/api/urls/${id}`);
+            const response = await axios.delete(`${API_URL}/api/urls/${id}`);
             
             //Proper response status of 204
             if (response.status === HTTP_STATUS.NO_CONTENT) {

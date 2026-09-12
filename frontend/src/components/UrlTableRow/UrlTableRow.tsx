@@ -8,6 +8,9 @@ type UrlTableRowProps = {
     onDelete: (id: number) => void;
 };
 
+// Global API URL from Vite environment variables
+const VITE_API_URL = import.meta.env.VITE_API_URL;
+
 function UrlTableRow({ url, rowNumber, onDelete }: UrlTableRowProps) {
 
     const [copied, setCopied] = useState(false);
@@ -15,7 +18,7 @@ function UrlTableRow({ url, rowNumber, onDelete }: UrlTableRowProps) {
     async function handleCopy() {
         try {
             await navigator.clipboard.writeText(
-                `http://localhost:3000/${url.shortCode}`
+                `${VITE_API_URL}/${url.shortCode}`
             );
 
             setCopied(true);
@@ -33,7 +36,7 @@ function UrlTableRow({ url, rowNumber, onDelete }: UrlTableRowProps) {
             <td>{url.originalUrl}</td>
             <td>
                 <a
-                    href={`http://localhost:3000/${url.shortCode}`}
+                    href={`${VITE_API_URL}/${url.shortCode}`}
                     target="_blank"
                     rel="noopener noreferrer"
                 >
