@@ -6,7 +6,7 @@ type PaginationProps = {
 
 function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
     return (
-        <div>
+        <div className="pagination">
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}

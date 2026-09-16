@@ -1,9 +1,9 @@
 
 function Header() {
     return (
-        <div>
-            URL Shortener
-        </div>
+        <header>
+            <h1>URL Shortener</h1>
+        </header>
     )
 }
 
