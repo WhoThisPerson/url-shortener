@@ -164,7 +164,10 @@ Follows a layered structure separating routes, controllers, services, and reposi
 Uses React components to organized by responsibility
 
 ### State Management
-### Data Flow
+
+The application uses React's `useState` and `useEffect` hooks for local state management.
+
+`Main` owns the URL collection and pagination state. Child components receive data and callback functions through props.
 
 ## 8. Edge Cases & Failure Handling
 
