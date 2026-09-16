@@ -2,6 +2,10 @@
 
 A full-stack URL shortener built to explore backend architecture, REST APIs, PostgreSQL persistence, automated testing, and Docker-based deployment.
 
+## Preview
+
+![URL Shortener application](screenshots/main-ui.png)
+
 ## Current Build Status
 
 ![Build Status](https://github.com/WhoThisPerson/url-shortener/actions/workflows/ci-build.yaml/badge.svg)
