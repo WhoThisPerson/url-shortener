@@ -125,7 +125,7 @@ The local test environment currently expects PostgreSQL test configuration to be
 
 ## Design Documentation
 
-More detailed architecture, data-model, API, testing, and design-decision documentation is available in [`design.md`](design.md).
+More detailed architecture, data-model, API, testing, and design-decision documentation is available in [`design.md`](docs/design.md).
 
 ## Motivation
 

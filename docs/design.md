@@ -119,7 +119,7 @@ Request:
 
 ```json
 {
-  "originalUrl": "https://example.com"
+  "originalUrl": "https://www.google.com"
 }
 ```
 
@@ -128,7 +128,7 @@ Successful response:
 ```json
 {
   "id": 1,
-  "originalUrl": "https://example.com",
+  "originalUrl": "https://www.google.com",
   "shortCode": "abc123",
   "clickCount": 0,
   "createdAt": "2026-09-16T18:00:00.000Z"
