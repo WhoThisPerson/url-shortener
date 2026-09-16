@@ -46,12 +46,12 @@ function UrlTableRow({ url, rowNumber, onDelete }: UrlTableRowProps) {
             </td>
             <td>{url.clickCount}</td>
             <td>
-                <button onClick={handleCopy}>
+                <button className="copy-button" onClick={handleCopy}>
                     {copied ? "Copied!" : "Copy"}
                 </button>
             </td>
             <td>
-                <button onClick={() => onDelete(url.id)}>
+                <button className="delete-button" onClick={() => onDelete(url.id)}>
                     Delete
                 </button>
             </td>
